@@ -70,6 +70,11 @@ namespace Oxide.Plugins
             }
         }
 
+        private void Unload()
+        {
+            _config = null;
+        }
+
         protected override void SaveConfig() => Config.WriteObject(_config);
 
         protected override void LoadDefaultConfig() => _config = new Configuration();

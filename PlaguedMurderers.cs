@@ -5,8 +5,8 @@ using Oxide.Core;
 
 namespace Oxide.Plugins
 {
-    [Info("Plagued Murderers", "DarkAz", "1.0.2")]
-    [Description("Spawn murderers with customised clothing skin permutations")]
+    [Info("Plagued Murderers", "DarkAz", "2.0.0")]
+    [Description("Spawn murderers with customised clothing and skin permutations")]
     class PlaguedMurderers : RustPlugin
     {
 
@@ -19,38 +19,38 @@ namespace Oxide.Plugins
             [JsonProperty(PropertyName = "Glowing Eyes")]
             public bool GlowingEyes = true;
 
-            [JsonProperty(PropertyName = "Randomly Use Headwrap")]
-            public bool RandomHeadwrap = true;
+            [JsonProperty(PropertyName = "Attire Headwear", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> Headwear = new List<string>() { "bucket.helmet", "burlap.headwrap", "none" };
 
-            [JsonProperty(PropertyName = "Wear Headwrap")]
-            public bool WearHeadwrap = true;
+            // Torso
+            [JsonProperty(PropertyName = "Attire Torso", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> Torso = new List<string>() { "tshirt", "jacket", "tshirt.long", "none" };
 
-            [JsonProperty(PropertyName = "Wear Tshirt")]
-            public bool WearTshirt = true;
+            // Legs
+            [JsonProperty(PropertyName = "Attire Legs", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> Legs = new List<string>() { "burlap.trousers", "pants.shorts" };
 
-            [JsonProperty(PropertyName = "Wear Gloves")]
-            public bool WearGloves = true;
+            // Feet
+            [JsonProperty(PropertyName = "Attire Feet", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> Feet = new List<string>() { "shoes.boots", "none" };
 
-            [JsonProperty(PropertyName = "Wear Trousers")]
-            public bool WearTrousers = true;
+            // Hands
+            [JsonProperty(PropertyName = "Attire Hands", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> Hands = new List<string>() { "burlap.gloves", "none" };
 
-            [JsonProperty(PropertyName = "Wear Boots")]
-            public bool WearBoots = true;
 
-            [JsonProperty(PropertyName = "Headwrap Skins", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<ulong> HeadwrapSkins = new List<ulong>() { 84948907, 1076584212, 811534810 };
 
-            [JsonProperty(PropertyName = "Tshirt Skins", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<ulong> TshirtSkins = new List<ulong>() { 811616832, 1572147878, 1120538508 };
-
-            [JsonProperty(PropertyName = "Glove Skins", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<ulong> GloveSkins = new List<ulong>() { 971740441, 1475175531 };
-
-            [JsonProperty(PropertyName = "Trouser Skins", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<ulong> TrouserSkins = new List<ulong>() { 1177788927, 823281717, 855123887 };
-
-            [JsonProperty(PropertyName = "Boot Skins", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<ulong> BootSkins = new List<ulong>() { 1427198029, 1428936568, 1291665415 };
+            [JsonProperty(PropertyName = "Skins")]
+            public Dictionary<string, List<ulong>> Skins = new Dictionary<string, List<ulong>>() {
+                ["bucket.helmet"] = new List<ulong>() { 747281863, 816503044, 818863931 },
+                ["burlap.headwrap"] = new List<ulong>() { 84948907, 1076584212, 811534810 },
+                ["tshirt"] = new List<ulong>() { 811616832, 1572147878, 1120538508 },
+                ["tshirt.long"] = new List<ulong>() { 1161735516, 1537333543, 810504871 },
+                ["burlap.trousers"] = new List<ulong>() { 1177788927, 823281717, 855123887 },
+                ["pants.shorts"] = new List<ulong>() { 885479497, 841150520, 793362671 },
+                ["shoes.boots"] = new List<ulong>() { 1427198029, 1428936568, 1291665415 },
+                ["burlap.gloves"] = new List<ulong>() { 971740441, 1475175531 },
+            };
 
         }
 
@@ -87,24 +87,21 @@ namespace Oxide.Plugins
         {       
             var inv_wear = murderer.inventory.containerWear;
 
-            int headwrapRandom = Core.Random.Range(0, 3);
-
-            Item burlap_headwrap = ItemManager.CreateByName("burlap.headwrap", 1, GetSkinId(_config.HeadwrapSkins));
             Item gloweyes = ItemManager.CreateByName("gloweyes");
-            Item tshirt = ItemManager.CreateByName("tshirt", 1, GetSkinId(_config.TshirtSkins));
-            Item burlap_gloves = ItemManager.CreateByName("burlap.gloves", 1, GetSkinId(_config.GloveSkins));
-            Item burlap_trousers = ItemManager.CreateByName("burlap.trousers", 1, GetSkinId(_config.TrouserSkins));
-            Item boots = ItemManager.CreateByName("shoes.boots", 1, GetSkinId(_config.BootSkins));
+
+            Item itemHeadwear = GetItem(_config.Headwear);
+            Item itemTorso = GetItem(_config.Torso);
+            Item itemLegs = GetItem(_config.Legs);
+            Item itemFeet = GetItem(_config.Feet);
+            Item itemHands = GetItem(_config.Hands);
 
             inv_wear.Clear();
             if (_config.GlowingEyes) gloweyes.MoveToContainer(inv_wear);
-            if (tshirt != null && _config.WearTshirt == true) tshirt.MoveToContainer(inv_wear);
-            if (burlap_gloves != null && _config.WearGloves == true) burlap_gloves.MoveToContainer(inv_wear);
-            if (burlap_trousers != null && _config.WearTrousers == true) burlap_trousers.MoveToContainer(inv_wear);
-            if (boots != null && _config.WearBoots == true) boots.MoveToContainer(inv_wear);
-            if(_config.RandomHeadwrap == false || headwrapRandom > 0) {
-              if (burlap_headwrap != null && _config.WearHeadwrap == true) burlap_headwrap.MoveToContainer(inv_wear);
-            }
+            if(itemHeadwear != null) itemHeadwear.MoveToContainer(inv_wear);
+            if(itemTorso != null) itemTorso.MoveToContainer(inv_wear);
+            if(itemLegs != null) itemLegs.MoveToContainer(inv_wear);
+            if(itemFeet != null) itemFeet.MoveToContainer(inv_wear);
+            if(itemHands != null) itemHands.MoveToContainer(inv_wear);
         }
 
         #endregion
@@ -116,6 +113,28 @@ namespace Oxide.Plugins
           int index = Core.Random.Range(0, Skins.Count - 1);
           ulong skinId = (ulong) Skins[index];
           return skinId;
+        }
+
+        private Item GetItem(List<string> ClothingItems) {
+          int index = Core.Random.Range(0, ClothingItems.Count - 1);
+          if(ClothingItems[index] == "none") {
+              return null;
+          }
+
+          var chosenItem = ClothingItems[index];
+
+          List<ulong> skinList;
+          Item SelectedItem;
+
+          bool skinsDefined = _config.Skins.TryGetValue(chosenItem, out skinList);
+
+          if(skinsDefined) {
+              SelectedItem = ItemManager.CreateByName(chosenItem, 1, GetSkinId(skinList));
+          } else {
+              SelectedItem = ItemManager.CreateByName(chosenItem, 1);
+          }
+
+          return SelectedItem;
         }
 
         #endregion

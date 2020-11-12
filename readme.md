@@ -6,7 +6,7 @@ Configure the attire and skins to choose from (or leave the plugin defaults if y
 
 A great way to really customise the appearance of your murderers without them all looking identical.
 
-![](https://darkaz.com/plugins/PlaguedMurderers.jpg)
+![](https://darkaz.com/wp-content/uploads/2020/11/Rust-Plagued-Murderers-v2-2-560x416.jpg)
 
 ## Configuration
 

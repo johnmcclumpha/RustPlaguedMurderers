@@ -5,7 +5,7 @@ using Oxide.Core;
 
 namespace Oxide.Plugins
 {
-    [Info("Plagued Murderers", "DarkAz", "2.0.0")]
+    [Info("Plagued Murderers", "DarkAz", "2.0.1")]
     [Description("Spawn murderers with customised clothing and skin permutations")]
     class PlaguedMurderers : RustPlugin
     {
@@ -22,23 +22,17 @@ namespace Oxide.Plugins
             [JsonProperty(PropertyName = "Attire Headwear", ObjectCreationHandling = ObjectCreationHandling.Replace)]
             public List<string> Headwear = new List<string>() { "bucket.helmet", "burlap.headwrap", "none" };
 
-            // Torso
             [JsonProperty(PropertyName = "Attire Torso", ObjectCreationHandling = ObjectCreationHandling.Replace)]
             public List<string> Torso = new List<string>() { "tshirt", "jacket", "tshirt.long", "none" };
 
-            // Legs
             [JsonProperty(PropertyName = "Attire Legs", ObjectCreationHandling = ObjectCreationHandling.Replace)]
             public List<string> Legs = new List<string>() { "burlap.trousers", "pants.shorts" };
 
-            // Feet
             [JsonProperty(PropertyName = "Attire Feet", ObjectCreationHandling = ObjectCreationHandling.Replace)]
             public List<string> Feet = new List<string>() { "shoes.boots", "none" };
 
-            // Hands
             [JsonProperty(PropertyName = "Attire Hands", ObjectCreationHandling = ObjectCreationHandling.Replace)]
             public List<string> Hands = new List<string>() { "burlap.gloves", "none" };
-
-
 
             [JsonProperty(PropertyName = "Skins")]
             public Dictionary<string, List<ulong>> Skins = new Dictionary<string, List<ulong>>() {
@@ -109,7 +103,6 @@ namespace Oxide.Plugins
         #region Helpers
 
         private ulong GetSkinId(List<ulong> Skins) {
-
           int index = Core.Random.Range(0, Skins.Count - 1);
           ulong skinId = (ulong) Skins[index];
           return skinId;
@@ -128,7 +121,7 @@ namespace Oxide.Plugins
 
           bool skinsDefined = _config.Skins.TryGetValue(chosenItem, out skinList);
 
-          if(skinsDefined) {
+          if(skinsDefined && skinList.Count > 0) {
               SelectedItem = ItemManager.CreateByName(chosenItem, 1, GetSkinId(skinList));
           } else {
               SelectedItem = ItemManager.CreateByName(chosenItem, 1);

@@ -5,7 +5,7 @@ using Oxide.Core;
 
 namespace Oxide.Plugins
 {
-    [Info("Plagued Murderers", "DarkAz", "2.1.0")]
+    [Info("Plagued Murderers", "DarkAz", "2.1.1")]
     [Description("Allows murderers to be customised with custom health & random selections of custom attire and skins.")]
     class PlaguedMurderers : RustPlugin
     {
@@ -20,7 +20,7 @@ namespace Oxide.Plugins
             public bool GlowingEyes = true;
 
             [JsonProperty(PropertyName = "Murderer Health", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public int murdererHealth = 10;
+            public int murdererHealth = 100;
 
             [JsonProperty(PropertyName = "Attire Headwear", ObjectCreationHandling = ObjectCreationHandling.Replace)]
             public List<string> Headwear = new List<string>() { "bucket.helmet", "burlap.headwrap", "none" };

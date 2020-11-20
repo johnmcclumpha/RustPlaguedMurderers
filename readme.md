@@ -1,8 +1,8 @@
 Spawn murderers with random selections of custom attire and skins.
 
-_Note: v2.0.0 requires a new config and is not compatible with config files from earlier versions_
-
 Configure the attire and skins to choose from (or leave the plugin defaults if you want) and when spawning murderers will be fitted out with a random combination of attire and skins.
+
+You can also configure the health (strength) of the murderers.
 
 A great way to really customise the appearance of your murderers without them all looking identical.
 
@@ -95,6 +95,12 @@ This would then randomly select one of the three skins in the relevant group for
 Defines whether murderers should spawn with glowing eyes
 
 Glowing Eyes: true/false
+
+**Set Murderer Health**
+
+Sets the health/strength of the murderers, (higher numbers will make them stronger).
+
+Default value for plagued murderers is 100.
 
 ## What's Next?
 

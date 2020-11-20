@@ -6,7 +6,7 @@ using Oxide.Core;
 namespace Oxide.Plugins
 {
     [Info("Plagued Murderers", "DarkAz", "2.1.0")]
-    [Description("Spawn murderers with customised clothing and skin permutations")]
+    [Description("Allows murderers to be customised with custom health & random selections of custom attire and skins.")]
     class PlaguedMurderers : RustPlugin
     {
 

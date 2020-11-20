@@ -42,7 +42,7 @@ Realistically any of the items that can be "worn" will work, it is recommended t
 
 *Headwear*
 ```
-"bucket.helmet", "burlap.headwrap", "clatter.helmet", "coffeecan.helmet", "deer.skull.mask", "diving.mask", "hat.beenie", "hat.boonie", "hat.cap", "hat.candle", "hat.dragonmask", "hat.miner", "heavy.plate.helmet", "mask.balaclava", "mask.bandana", "nightvisiongoggles", "riot.helmet", "wood.armor.helmet"
+"attire.reindeer.headband", "bucket.helmet", "burlap.headwrap", "clatter.helmet", "coffeecan.helmet", "deer.skull.mask", "diving.mask", "hat.beenie", "hat.boonie", "hat.cap", "hat.candle", "hat.dragonmask", "hat.miner", "heavy.plate.helmet", "mask.balaclava", "mask.bandana", "nightvisiongoggles", "riot.helmet", "santahat", "santabeard", "wood.armor.helmet"
 ```
 
 *Torso*

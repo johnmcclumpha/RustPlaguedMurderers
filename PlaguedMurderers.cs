@@ -5,7 +5,7 @@ using Oxide.Core;
 
 namespace Oxide.Plugins
 {
-    [Info("Plagued Murderers", "DarkAz", "2.0.1")]
+    [Info("Plagued Murderers", "DarkAz", "2.1.0")]
     [Description("Spawn murderers with customised clothing and skin permutations")]
     class PlaguedMurderers : RustPlugin
     {
@@ -18,6 +18,9 @@ namespace Oxide.Plugins
         {
             [JsonProperty(PropertyName = "Glowing Eyes")]
             public bool GlowingEyes = true;
+
+            [JsonProperty(PropertyName = "Murderer Health", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public int murdererHealth = 10;
 
             [JsonProperty(PropertyName = "Attire Headwear", ObjectCreationHandling = ObjectCreationHandling.Replace)]
             public List<string> Headwear = new List<string>() { "bucket.helmet", "burlap.headwrap", "none" };
@@ -78,7 +81,11 @@ namespace Oxide.Plugins
         #region Hooks
 
         void OnEntitySpawned(NPCMurderer murderer)
-        {       
+        {
+            var combatEntity = murderer as BaseCombatEntity;
+            combatEntity._maxHealth = _config.murdererHealth;
+            combatEntity.health = _config.murdererHealth;
+
             var inv_wear = murderer.inventory.containerWear;
 
             Item gloweyes = ItemManager.CreateByName("gloweyes");

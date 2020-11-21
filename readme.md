@@ -1,6 +1,6 @@
-Spawn murderers with random selections of custom attire and skins.
+Spawn murderers with random selections of custom attire, skins and melee weapons.
 
-Configure the attire and skins to choose from (or leave the plugin defaults if you want) and when spawning murderers will be fitted out with a random combination of attire and skins.
+Configure the attire, skins and weapons to choose from (or leave the plugin defaults if you want) and when spawning murderers will be fitted out with a random combination of attire, skins and weapons.
 
 You can also configure the health (strength) of the murderers.
 
@@ -89,6 +89,26 @@ _example:_
 ```
 
 This would then randomly select one of the three skins in the relevant group for use when the attire is added to the murderers.
+
+**Configure which melee weapons murderers should be equipped with:**
+
+The weapons to choose from is defined in the Melee Weapon section of the config. A value of "none" can be added to have some murderers spawned without a weapon (although this seems like a weird thing to do, it will work).
+
+_example:_
+
+```
+"Melee Weapon": [
+  "hatchet",
+  "knife.bone",
+  "knife.butcher",
+  "knife.combat",
+  "machete",
+  "paddle",
+  "salvaged.cleaver",
+  "salvaged.sword"
+]
+```
+
 
 **Enable Glowing Eyes**
 

@@ -5,8 +5,8 @@ using Oxide.Core;
 
 namespace Oxide.Plugins
 {
-    [Info("Plagued Murderers", "DarkAz", "2.1.1")]
-    [Description("Allows murderers to be customised with custom health & random selections of custom attire and skins.")]
+    [Info("Plagued Murderers", "DarkAz", "2.2.0")]
+    [Description("Allows murderers to be customised with health, attire, skins and melee weapons.")]
     class PlaguedMurderers : RustPlugin
     {
 
@@ -49,6 +49,9 @@ namespace Oxide.Plugins
                 ["burlap.gloves"] = new List<ulong>() { 971740441, 1475175531 },
             };
 
+            [JsonProperty(PropertyName = "Melee Weapon", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> MeleeWeapon = new List<string>() { "hatchet", "knife.bone", "knife.butcher", "knife.combat", "longsword", "machete", "paddle", "salvaged.cleaver", "salvaged.sword" };
+
         }
 
         protected override void LoadConfig()
@@ -87,6 +90,7 @@ namespace Oxide.Plugins
             combatEntity.health = _config.murdererHealth;
 
             var inv_wear = murderer.inventory.containerWear;
+            var inv_belt = murderer.inventory.containerBelt;
 
             Item gloweyes = ItemManager.CreateByName("gloweyes");
 
@@ -97,12 +101,21 @@ namespace Oxide.Plugins
             Item itemHands = GetItem(_config.Hands);
 
             inv_wear.Clear();
-            if (_config.GlowingEyes) gloweyes.MoveToContainer(inv_wear);
+            if(_config.GlowingEyes) gloweyes.MoveToContainer(inv_wear);
             if(itemHeadwear != null) itemHeadwear.MoveToContainer(inv_wear);
             if(itemTorso != null) itemTorso.MoveToContainer(inv_wear);
             if(itemLegs != null) itemLegs.MoveToContainer(inv_wear);
             if(itemFeet != null) itemFeet.MoveToContainer(inv_wear);
             if(itemHands != null) itemHands.MoveToContainer(inv_wear);
+
+            Item itemMelee = GetItem(_config.MeleeWeapon);
+
+            if(itemMelee != null)
+            {
+                inv_belt.Clear();
+                itemMelee.MoveToContainer(inv_belt);
+            }
+
         }
 
         #endregion

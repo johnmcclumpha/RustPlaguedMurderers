@@ -1,4 +1,4 @@
-Spawn murderers with random selections of custom attire, skins and melee weapons.
+Fit out murderers (and now scarecrows!) with random selections of custom attire, skins and melee weapons.
 
 Configure the attire, skins and weapons to choose from (or leave the plugin defaults if you want) and when spawning murderers will be fitted out with a random combination of attire, skins and weapons.
 
@@ -9,6 +9,8 @@ A great way to really customise the appearance of your murderers without them al
 ![](https://darkaz.com/wp-content/uploads/2020/11/Rust-Plagued-Murderers-v2-2-560x416.jpg)
 
 ## Configuration
+
+Settings for scarecrows are configured in the same way as murderers, but in the sections of the config file suffixed with _"(scarecrows)"_.
 
 **Configure which clothing (attire) murderers should wear:**
 
@@ -71,6 +73,8 @@ Skins are configured by using the item names (from attire above) and the id of t
 
 If no skins are defined for a piece of attire, it will be added with its default skin.
 
+_Note: skins will be randomly chosen from the same sets for both Murderers and Scarecrows:_
+
 _example:_
 
 ```
@@ -112,21 +116,21 @@ _example:_
 
 **Enable Glowing Eyes**
 
-Defines whether murderers should spawn with glowing eyes
+Defines whether murderers and scarecrows should spawn with glowing eyes
 
 Glowing Eyes: true/false
 
-**Set Murderer Health**
+**Set Health for Murderers and Scarecrows**
 
-Sets the health/strength of the murderers, (higher numbers will make them stronger).
+Sets the health/strength of the murderers and scarecrows, (higher numbers will make them stronger).
 
-Default value for plagued murderers is 100.
+Default plugin value for murderers is 100 and 500 for scarecrows.
 
 ## What's Next?
 
 With the release of v2.0.0 the ability to utilise other clothing items has been added, rather than just thelimited set in earlier versions. Some of the ideas moving forward include:
 
-- support other entities (scarecrows, scientists(?), and more)
+- support other entities (~~scarecrows~~, scientists(?), and more)
 - support/integration with kits (possibly)
 
 If you have any suggestions or requests, head on over to the support forms for the plugin on uMod and let me know.

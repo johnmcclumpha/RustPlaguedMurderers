@@ -5,8 +5,8 @@ using Oxide.Core;
 
 namespace Oxide.Plugins
 {
-    [Info("Plagued Murderers", "DarkAz", "2.2.0")]
-    [Description("Allows murderers to be customised with health, attire, skins and melee weapons.")]
+    [Info("Plagued Murderers", "DarkAz", "2.3.0")]
+    [Description("Allows murderers and scarecrows to be customised with health, attire, skins and melee weapons.")]
     class PlaguedMurderers : RustPlugin
     {
 
@@ -16,6 +16,7 @@ namespace Oxide.Plugins
 
         private class Configuration
         {
+            // begin murderers config
             [JsonProperty(PropertyName = "Glowing Eyes")]
             public bool GlowingEyes = true;
 
@@ -51,6 +52,35 @@ namespace Oxide.Plugins
 
             [JsonProperty(PropertyName = "Melee Weapon", ObjectCreationHandling = ObjectCreationHandling.Replace)]
             public List<string> MeleeWeapon = new List<string>() { "hatchet", "knife.bone", "knife.butcher", "knife.combat", "longsword", "machete", "paddle", "salvaged.cleaver", "salvaged.sword" };
+
+            // end murderers config
+            // begin scarecrows config
+
+            [JsonProperty(PropertyName = "Glowing Eyes (Scarecrow)")]
+            public bool GlowingScarecrowEyes = true;
+
+            [JsonProperty(PropertyName = "Scarecrow Health", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public int scarecrowHealth = 500;
+
+            [JsonProperty(PropertyName = "Attire Headwear (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> ScarecrowHeadwear = new List<string>() { };
+
+            [JsonProperty(PropertyName = "Attire Torso (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> ScarecrowTorso = new List<string>() { "scarecrow.suit" };
+
+            [JsonProperty(PropertyName = "Attire Legs (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> ScarecrowLegs = new List<string>() { };
+
+            [JsonProperty(PropertyName = "Attire Feet (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> ScarecrowFeet = new List<string>() { };
+
+            [JsonProperty(PropertyName = "Attire Hands (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> ScarecrowHands = new List<string>() { };
+
+            [JsonProperty(PropertyName = "Melee Weapon (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> ScarecrowMeleeWeapon = new List<string>() { };
+
+            // end scarecrows config
 
         }
 
@@ -118,6 +148,41 @@ namespace Oxide.Plugins
 
         }
 
+        void OnEntitySpawned(HTNPlayer scarecrow)
+        {
+            var combatEntity = scarecrow as BaseCombatEntity;
+            combatEntity._maxHealth = _config.scarecrowHealth;
+            combatEntity.health = _config.scarecrowHealth;
+
+            var inv_wear = scarecrow.inventory.containerWear;
+            var inv_belt = scarecrow.inventory.containerBelt;
+
+            Item gloweyes = ItemManager.CreateByName("gloweyes");
+
+            Item itemHeadwear = GetItem(_config.ScarecrowHeadwear);
+            Item itemTorso = GetItem(_config.ScarecrowTorso);
+            Item itemLegs = GetItem(_config.ScarecrowLegs);
+            Item itemFeet = GetItem(_config.ScarecrowFeet);
+            Item itemHands = GetItem(_config.ScarecrowHands);
+
+            inv_wear.Clear();
+            if(_config.GlowingScarecrowEyes) gloweyes.MoveToContainer(inv_wear);
+            if(itemHeadwear != null) itemHeadwear.MoveToContainer(inv_wear);
+            if(itemTorso != null) itemTorso.MoveToContainer(inv_wear);
+            if(itemLegs != null) itemLegs.MoveToContainer(inv_wear);
+            if(itemFeet != null) itemFeet.MoveToContainer(inv_wear);
+            if(itemHands != null) itemHands.MoveToContainer(inv_wear);
+
+            Item itemMelee = GetItem(_config.ScarecrowMeleeWeapon);
+
+            if(itemMelee != null)
+            {
+                inv_belt.Clear();
+                itemMelee.MoveToContainer(inv_belt);
+            }
+
+        }
+
         #endregion
 
         #region Helpers
@@ -129,6 +194,9 @@ namespace Oxide.Plugins
         }
 
         private Item GetItem(List<string> ClothingItems) {
+          if(ClothingItems.Count < 1){
+              return null;
+          }
           int index = Core.Random.Range(0, ClothingItems.Count - 1);
           if(ClothingItems[index] == "none") {
               return null;

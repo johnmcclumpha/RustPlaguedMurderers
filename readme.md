@@ -2,7 +2,7 @@ Fit out murderers (and now scarecrows!) with random selections of custom attire,
 
 Configure the attire, skins and weapons to choose from (or leave the plugin defaults if you want) and when spawning murderers will be fitted out with a random combination of attire, skins and weapons.
 
-You can also configure the health (strength) of the murderers.
+You can also configure the health (strength) of the murderers and scarecrows.
 
 A great way to really customise the appearance of your murderers without them all looking identical.
 
@@ -125,6 +125,18 @@ Glowing Eyes: true/false
 Sets the health/strength of the murderers and scarecrows, (higher numbers will make them stronger).
 
 Default plugin value for murderers is 100 and 500 for scarecrows.
+
+## Spawning Murderers and Scarecrows
+
+The plugin itself doesn't cause murderers to spwan, there's a couple of ways to get this happening on your server:
+
+1. Update the server config with (or type these into your console):
+
+halloween.enabled "true"
+halloween.murdererpopulation "10"
+halloween.scarecrowpopulation "5"
+ 
+2. Utilise another plugin to spawn them such as Murderers ot Night Zombies
 
 ## What's Next?
 

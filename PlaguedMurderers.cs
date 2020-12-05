@@ -5,8 +5,8 @@ using Oxide.Core;
 
 namespace Oxide.Plugins
 {
-    [Info("Plagued Murderers", "DarkAz", "2.3.0")]
-    [Description("Allows murderers and scarecrows to be customised with health, attire, skins and melee weapons.")]
+    [Info("Plagued Murderers", "DarkAz", "2.3.1")]
+    [Description("Allows murderers to be customised with health, attire, skins and melee weapons.")]
     class PlaguedMurderers : RustPlugin
     {
 
@@ -148,40 +148,40 @@ namespace Oxide.Plugins
 
         }
 
-        void OnEntitySpawned(HTNPlayer scarecrow)
-        {
-            var combatEntity = scarecrow as BaseCombatEntity;
-            combatEntity._maxHealth = _config.scarecrowHealth;
-            combatEntity.health = _config.scarecrowHealth;
+        // void OnEntitySpawned(HTNPlayer scarecrow)
+        // {
+        //     var combatEntity = scarecrow as BaseCombatEntity;
+        //     combatEntity._maxHealth = _config.scarecrowHealth;
+        //     combatEntity.health = _config.scarecrowHealth;
 
-            var inv_wear = scarecrow.inventory.containerWear;
-            var inv_belt = scarecrow.inventory.containerBelt;
+        //     var inv_wear = scarecrow.inventory.containerWear;
+        //     var inv_belt = scarecrow.inventory.containerBelt;
 
-            Item gloweyes = ItemManager.CreateByName("gloweyes");
+        //     Item gloweyes = ItemManager.CreateByName("gloweyes");
 
-            Item itemHeadwear = GetItem(_config.ScarecrowHeadwear);
-            Item itemTorso = GetItem(_config.ScarecrowTorso);
-            Item itemLegs = GetItem(_config.ScarecrowLegs);
-            Item itemFeet = GetItem(_config.ScarecrowFeet);
-            Item itemHands = GetItem(_config.ScarecrowHands);
+        //     Item itemHeadwear = GetItem(_config.ScarecrowHeadwear);
+        //     Item itemTorso = GetItem(_config.ScarecrowTorso);
+        //     Item itemLegs = GetItem(_config.ScarecrowLegs);
+        //     Item itemFeet = GetItem(_config.ScarecrowFeet);
+        //     Item itemHands = GetItem(_config.ScarecrowHands);
 
-            inv_wear.Clear();
-            if(_config.GlowingScarecrowEyes) gloweyes.MoveToContainer(inv_wear);
-            if(itemHeadwear != null) itemHeadwear.MoveToContainer(inv_wear);
-            if(itemTorso != null) itemTorso.MoveToContainer(inv_wear);
-            if(itemLegs != null) itemLegs.MoveToContainer(inv_wear);
-            if(itemFeet != null) itemFeet.MoveToContainer(inv_wear);
-            if(itemHands != null) itemHands.MoveToContainer(inv_wear);
+        //     inv_wear.Clear();
+        //     if(_config.GlowingScarecrowEyes) gloweyes.MoveToContainer(inv_wear);
+        //     if(itemHeadwear != null) itemHeadwear.MoveToContainer(inv_wear);
+        //     if(itemTorso != null) itemTorso.MoveToContainer(inv_wear);
+        //     if(itemLegs != null) itemLegs.MoveToContainer(inv_wear);
+        //     if(itemFeet != null) itemFeet.MoveToContainer(inv_wear);
+        //     if(itemHands != null) itemHands.MoveToContainer(inv_wear);
 
-            Item itemMelee = GetItem(_config.ScarecrowMeleeWeapon);
+        //     Item itemMelee = GetItem(_config.ScarecrowMeleeWeapon);
 
-            if(itemMelee != null)
-            {
-                inv_belt.Clear();
-                itemMelee.MoveToContainer(inv_belt);
-            }
+        //     if(itemMelee != null)
+        //     {
+        //         inv_belt.Clear();
+        //         itemMelee.MoveToContainer(inv_belt);
+        //     }
 
-        }
+        // }
 
         #endregion
 

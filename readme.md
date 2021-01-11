@@ -1,7 +1,5 @@
 Fit out murderers (and now scarecrows!) with random selections of custom attire, skins and melee weapons.
 
-*NOTE:* Scarecrow functionality has been removed due to it also skinning scientists! will be back in soon
-
 Configure the attire, skins and weapons to choose from (or leave the plugin defaults if you want) and when spawning murderers will be fitted out with a random combination of attire, skins and weapons.
 
 You can also configure the health (strength) of the murderers and scarecrows.

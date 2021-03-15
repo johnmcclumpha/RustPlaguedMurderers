@@ -138,9 +138,9 @@ halloween.scarecrowpopulation "5"
  
 2. Utilise another plugin to spawn them such as Murderers ot Night Zombies
 
-## Kits
+## Rust Kits Support
 
-The plugin now supports kits! From v2.4.0 onwards.
+The plugin now supports Rust Kits!
 
 Simply add the names of the kits to the configuration file under the relevant sections, and set "Use Kits" to true.
 

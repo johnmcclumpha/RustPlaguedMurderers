@@ -138,11 +138,18 @@ halloween.scarecrowpopulation "5"
  
 2. Utilise another plugin to spawn them such as Murderers ot Night Zombies
 
+## Kits
+
+The plugin now supports kits! From v2.4.0 onwards.
+
+Simply add the names of the kits to the configuration file under the relevant sections, and set "Use Kits" to true.
+
+_Note: if "Use Kits" is set to true, then all other config options will be ignored._
+
 ## What's Next?
 
-With the release of v2.0.0 the ability to utilise other clothing items has been added, rather than just thelimited set in earlier versions. Some of the ideas moving forward include:
-
-- support other entities (~~scarecrows~~, scientists(?), and more)
-- support/integration with kits (possibly)
+Possible ideas: (nothing is locked in here yet)
+- Support for other entities such as scientists
+- Ability to randomly clothe HumanNPCs
 
 If you have any suggestions or requests, head on over to the support forms for the plugin on uMod and let me know.

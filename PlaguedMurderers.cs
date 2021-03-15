@@ -5,7 +5,7 @@ using Oxide.Core;
 
 namespace Oxide.Plugins
 {
-    [Info("Plagued Murderers", "DarkAz", "2.3.2")]
+    [Info("Plagued Murderers", "DarkAz", "2.4.0")]
     [Description("Allows murderers and scarecrows to be customised with health, attire, skins and melee weapons.")]
     class PlaguedMurderers : RustPlugin
     {
@@ -16,6 +16,11 @@ namespace Oxide.Plugins
 
         private class Configuration
         {
+            // begin general config
+            [JsonProperty(PropertyName = "Use Kits", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public bool useKits = false;
+
+            // end general config
             // begin murderers config
             [JsonProperty(PropertyName = "Glowing Eyes")]
             public bool GlowingEyes = true;
@@ -52,6 +57,9 @@ namespace Oxide.Plugins
 
             [JsonProperty(PropertyName = "Melee Weapon", ObjectCreationHandling = ObjectCreationHandling.Replace)]
             public List<string> MeleeWeapon = new List<string>() { "hatchet", "knife.bone", "knife.butcher", "knife.combat", "longsword", "machete", "paddle", "salvaged.cleaver", "salvaged.sword" };
+
+            [JsonProperty(PropertyName = "Murderer Kits", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> MurdererKits = new List<string>() { "murderer-kit1", "murderer-kit2" };
 
             // end murderers config
             // begin scarecrows config
@@ -119,34 +127,15 @@ namespace Oxide.Plugins
             combatEntity._maxHealth = _config.murdererHealth;
             combatEntity.health = _config.murdererHealth;
 
-            var inv_wear = murderer.inventory.containerWear;
-            var inv_belt = murderer.inventory.containerBelt;
-
-            Item gloweyes = ItemManager.CreateByName("gloweyes");
-
-            Item itemHeadwear = GetItem(_config.Headwear);
-            Item itemTorso = GetItem(_config.Torso);
-            Item itemLegs = GetItem(_config.Legs);
-            Item itemFeet = GetItem(_config.Feet);
-            Item itemHands = GetItem(_config.Hands);
-
-            inv_wear.Clear();
-            if(_config.GlowingEyes) gloweyes.MoveToContainer(inv_wear);
-            if(itemHeadwear != null) itemHeadwear.MoveToContainer(inv_wear);
-            if(itemTorso != null) itemTorso.MoveToContainer(inv_wear);
-            if(itemLegs != null) itemLegs.MoveToContainer(inv_wear);
-            if(itemFeet != null) itemFeet.MoveToContainer(inv_wear);
-            if(itemHands != null) itemHands.MoveToContainer(inv_wear);
-
-            Item itemMelee = GetItem(_config.MeleeWeapon);
-
-            if(itemMelee != null)
+            if(_config.useKits)
             {
-                inv_belt.Clear();
-                itemMelee.MoveToContainer(inv_belt);
+                GiveKit(murderer, "tshirt-black");
+            } else {
+                ClotheMurderer(murderer);
             }
 
         }
+
 
         void OnEntitySpawned(HTNPlayer scarecrow)
         {
@@ -158,32 +147,7 @@ namespace Oxide.Plugins
             combatEntity._maxHealth = _config.scarecrowHealth;
             combatEntity.health = _config.scarecrowHealth;
 
-            var inv_wear = scarecrow.inventory.containerWear;
-            var inv_belt = scarecrow.inventory.containerBelt;
-
-            Item gloweyes = ItemManager.CreateByName("gloweyes");
-
-            Item itemHeadwear = GetItem(_config.ScarecrowHeadwear);
-            Item itemTorso = GetItem(_config.ScarecrowTorso);
-            Item itemLegs = GetItem(_config.ScarecrowLegs);
-            Item itemFeet = GetItem(_config.ScarecrowFeet);
-            Item itemHands = GetItem(_config.ScarecrowHands);
-
-            inv_wear.Clear();
-            if(_config.GlowingScarecrowEyes) gloweyes.MoveToContainer(inv_wear);
-            if(itemHeadwear != null) itemHeadwear.MoveToContainer(inv_wear);
-            if(itemTorso != null) itemTorso.MoveToContainer(inv_wear);
-            if(itemLegs != null) itemLegs.MoveToContainer(inv_wear);
-            if(itemFeet != null) itemFeet.MoveToContainer(inv_wear);
-            if(itemHands != null) itemHands.MoveToContainer(inv_wear);
-
-            Item itemMelee = GetItem(_config.ScarecrowMeleeWeapon);
-
-            if(itemMelee != null)
-            {
-                inv_belt.Clear();
-                itemMelee.MoveToContainer(inv_belt);
-            }
+            ClotheScarecrow(scarecrow);
 
         }
 
@@ -221,6 +185,85 @@ namespace Oxide.Plugins
 
           return SelectedItem;
         }
+
+        void ClotheMurderer(NPCMurderer murderer)
+        {
+
+            var inv_wear = murderer.inventory.containerWear;
+            var inv_belt = murderer.inventory.containerBelt;
+
+            Item gloweyes = ItemManager.CreateByName("gloweyes");
+
+            Item itemHeadwear = GetItem(_config.Headwear);
+            Item itemTorso = GetItem(_config.Torso);
+            Item itemLegs = GetItem(_config.Legs);
+            Item itemFeet = GetItem(_config.Feet);
+            Item itemHands = GetItem(_config.Hands);
+
+            inv_wear.Clear();
+            if(_config.GlowingEyes) gloweyes.MoveToContainer(inv_wear);
+            if(itemHeadwear != null) itemHeadwear.MoveToContainer(inv_wear);
+            if(itemTorso != null) itemTorso.MoveToContainer(inv_wear);
+            if(itemLegs != null) itemLegs.MoveToContainer(inv_wear);
+            if(itemFeet != null) itemFeet.MoveToContainer(inv_wear);
+            if(itemHands != null) itemHands.MoveToContainer(inv_wear);
+
+            Item itemMelee = GetItem(_config.MeleeWeapon);
+
+            if(itemMelee != null)
+            {
+                inv_belt.Clear();
+                itemMelee.MoveToContainer(inv_belt);
+            }
+
+        }
+
+        void ClotheScarecrow(HTNPlayer scarecrow)
+        {
+
+            var inv_wear = scarecrow.inventory.containerWear;
+            var inv_belt = scarecrow.inventory.containerBelt;
+
+            Item gloweyes = ItemManager.CreateByName("gloweyes");
+
+            Item itemHeadwear = GetItem(_config.ScarecrowHeadwear);
+            Item itemTorso = GetItem(_config.ScarecrowTorso);
+            Item itemLegs = GetItem(_config.ScarecrowLegs);
+            Item itemFeet = GetItem(_config.ScarecrowFeet);
+            Item itemHands = GetItem(_config.ScarecrowHands);
+
+            inv_wear.Clear();
+            if(_config.GlowingScarecrowEyes) gloweyes.MoveToContainer(inv_wear);
+            if(itemHeadwear != null) itemHeadwear.MoveToContainer(inv_wear);
+            if(itemTorso != null) itemTorso.MoveToContainer(inv_wear);
+            if(itemLegs != null) itemLegs.MoveToContainer(inv_wear);
+            if(itemFeet != null) itemFeet.MoveToContainer(inv_wear);
+            if(itemHands != null) itemHands.MoveToContainer(inv_wear);
+
+            Item itemMelee = GetItem(_config.ScarecrowMeleeWeapon);
+
+            if(itemMelee != null)
+            {
+                inv_belt.Clear();
+                itemMelee.MoveToContainer(inv_belt);
+            }
+
+        }
+
+        private static void GiveKit(NPCMurderer npc, string kit)
+        {
+            Interface.Oxide.CallHook("GiveKit", npc, kit);
+
+            Item item = npc.inventory.containerBelt.GetSlot(0);
+            
+            if (item == null)
+            {
+                return;
+            }
+            
+            npc.UpdateActiveItem(item.uid);
+        }
+        // npc.Invoke(() => GiveKit(npc, _eventSettings.Kits.GetRandom(), _eventSettings.UseKits), 2f);
 
         #endregion
 

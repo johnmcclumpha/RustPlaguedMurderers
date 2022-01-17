@@ -5,7 +5,7 @@ using Oxide.Core;
 
 namespace Oxide.Plugins
 {
-    [Info("Plagued Murderers", "DarkAz", "2.4.1")]
+    [Info("Plagued Murderers", "DarkAz", "3.0.0")]
     [Description("Allows murderers and scarecrows to be customised with health, attire, skins and melee weapons.")]
     class PlaguedMurderers : RustPlugin
     {
@@ -21,29 +21,30 @@ namespace Oxide.Plugins
             public bool useKits = false;
 
             // end general config
-            // begin murderers config
-            [JsonProperty(PropertyName = "Glowing Eyes")]
-            public bool GlowingEyes = true;
+            // begin scarecrows config
 
-            [JsonProperty(PropertyName = "Murderer Health", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public int murdererHealth = 100;
+            [JsonProperty(PropertyName = "Glowing Eyes (Scarecrow)")]
+            public bool GlowingScarecrowEyes = true;
 
-            [JsonProperty(PropertyName = "Attire Headwear", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<string> Headwear = new List<string>() { "bucket.helmet", "burlap.headwrap", "none" };
+            [JsonProperty(PropertyName = "Scarecrow Health", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public int scarecrowHealth = 500;
 
-            [JsonProperty(PropertyName = "Attire Torso", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<string> Torso = new List<string>() { "tshirt", "jacket", "tshirt.long", "none" };
+            [JsonProperty(PropertyName = "Attire Headwear (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> ScarecrowHeadwear = new List<string>() { "bucket.helmet", "burlap.headwrap", "none" };
 
-            [JsonProperty(PropertyName = "Attire Legs", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<string> Legs = new List<string>() { "burlap.trousers", "pants.shorts" };
+            [JsonProperty(PropertyName = "Attire Torso (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> ScarecrowTorso = new List<string>() { "tshirt", "jacket", "tshirt.long", "none" };
 
-            [JsonProperty(PropertyName = "Attire Feet", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<string> Feet = new List<string>() { "shoes.boots", "none" };
+            [JsonProperty(PropertyName = "Attire Legs (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> ScarecrowLegs = new List<string>() { "burlap.trousers", "pants.shorts" };
 
-            [JsonProperty(PropertyName = "Attire Hands", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<string> Hands = new List<string>() { "burlap.gloves", "none" };
+            [JsonProperty(PropertyName = "Attire Feet (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> ScarecrowFeet = new List<string>() { "shoes.boots", "none" };
 
-            [JsonProperty(PropertyName = "Skins")]
+            [JsonProperty(PropertyName = "Attire Hands (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+            public List<string> ScarecrowHands = new List<string>() { "burlap.gloves", "none" };
+
+            [JsonProperty(PropertyName = "Skins (Scarecrow)")]
             public Dictionary<string, List<ulong>> Skins = new Dictionary<string, List<ulong>>() {
                 ["bucket.helmet"] = new List<ulong>() { 747281863, 816503044, 818863931 },
                 ["burlap.headwrap"] = new List<ulong>() { 84948907, 1076584212, 811534810 },
@@ -55,39 +56,8 @@ namespace Oxide.Plugins
                 ["burlap.gloves"] = new List<ulong>() { 971740441, 1475175531 },
             };
 
-            [JsonProperty(PropertyName = "Melee Weapon", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<string> MeleeWeapon = new List<string>() { "hatchet", "knife.bone", "knife.butcher", "knife.combat", "longsword", "machete", "paddle", "salvaged.cleaver", "salvaged.sword" };
-
-            [JsonProperty(PropertyName = "Murderer Kits", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<string> MurdererKits = new List<string>() { "murderer-kit1", "murderer-kit2" };
-
-            // end murderers config
-            // begin scarecrows config
-
-            [JsonProperty(PropertyName = "Glowing Eyes (Scarecrow)")]
-            public bool GlowingScarecrowEyes = true;
-
-            [JsonProperty(PropertyName = "Scarecrow Health", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public int scarecrowHealth = 500;
-
-            [JsonProperty(PropertyName = "Attire Headwear (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<string> ScarecrowHeadwear = new List<string>() { };
-
-            [JsonProperty(PropertyName = "Attire Torso (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<string> ScarecrowTorso = new List<string>() { "scarecrow.suit" };
-
-            [JsonProperty(PropertyName = "Attire Legs (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<string> ScarecrowLegs = new List<string>() { };
-
-            [JsonProperty(PropertyName = "Attire Feet (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<string> ScarecrowFeet = new List<string>() { };
-
-            [JsonProperty(PropertyName = "Attire Hands (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<string> ScarecrowHands = new List<string>() { };
-
             [JsonProperty(PropertyName = "Melee Weapon (Scarecrow)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public List<string> ScarecrowMeleeWeapon = new List<string>() { };
-
+            public List<string> ScarecrowMeleeWeapon = new List<string>() { "hatchet", "knife.bone", "knife.butcher", "knife.combat", "longsword", "machete", "paddle", "salvaged.cleaver", "salvaged.sword" };
             [JsonProperty(PropertyName = "Scarecrow Kits", ObjectCreationHandling = ObjectCreationHandling.Replace)]
             public List<string> ScarecrowKits = new List<string>() { "scarecrow-kit1", "scarecrow-kit2" };
 
@@ -124,23 +94,7 @@ namespace Oxide.Plugins
 
         #region Hooks
 
-        void OnEntitySpawned(NPCMurderer murderer)
-        {
-            var combatEntity = murderer as BaseCombatEntity;
-            combatEntity._maxHealth = _config.murdererHealth;
-            combatEntity.health = _config.murdererHealth;
-
-            if(_config.useKits)
-            {
-                GiveKitMurderer(murderer, GetKitName(_config.MurdererKits));
-            } else {
-                ClotheMurderer(murderer);
-            }
-
-        }
-
-
-        void OnEntitySpawned(HTNPlayer scarecrow)
+        void OnEntitySpawned(ScarecrowNPC scarecrow)
         {
             
             var combatEntity = scarecrow as BaseCombatEntity;
@@ -204,39 +158,7 @@ namespace Oxide.Plugins
           return SelectedItem;
         }
 
-        void ClotheMurderer(NPCMurderer murderer)
-        {
-
-            var inv_wear = murderer.inventory.containerWear;
-            var inv_belt = murderer.inventory.containerBelt;
-
-            Item gloweyes = ItemManager.CreateByName("gloweyes");
-
-            Item itemHeadwear = GetItem(_config.Headwear);
-            Item itemTorso = GetItem(_config.Torso);
-            Item itemLegs = GetItem(_config.Legs);
-            Item itemFeet = GetItem(_config.Feet);
-            Item itemHands = GetItem(_config.Hands);
-
-            inv_wear.Clear();
-            if(_config.GlowingEyes) gloweyes.MoveToContainer(inv_wear);
-            if(itemHeadwear != null) itemHeadwear.MoveToContainer(inv_wear);
-            if(itemTorso != null) itemTorso.MoveToContainer(inv_wear);
-            if(itemLegs != null) itemLegs.MoveToContainer(inv_wear);
-            if(itemFeet != null) itemFeet.MoveToContainer(inv_wear);
-            if(itemHands != null) itemHands.MoveToContainer(inv_wear);
-
-            Item itemMelee = GetItem(_config.MeleeWeapon);
-
-            if(itemMelee != null)
-            {
-                inv_belt.Clear();
-                itemMelee.MoveToContainer(inv_belt);
-            }
-
-        }
-
-        void ClotheScarecrow(HTNPlayer scarecrow)
+        void ClotheScarecrow(ScarecrowNPC scarecrow)
         {
 
             var inv_wear = scarecrow.inventory.containerWear;
@@ -268,24 +190,7 @@ namespace Oxide.Plugins
 
         }
 
-        private static void GiveKitMurderer(NPCMurderer npc, string kit)
-        {
-            if (kit == null)
-                return;
-
-            Interface.Oxide.CallHook("GiveKit", npc, kit);
-
-            Item item = npc.inventory.containerBelt.GetSlot(0);
-            
-            if (item == null)
-            {
-                return;
-            }
-            
-            npc.UpdateActiveItem(item.uid);
-        }
-
-        private static void GiveKitScarecrow(HTNPlayer npc, string kit)
+        private static void GiveKitScarecrow(ScarecrowNPC npc, string kit)
         {
             if (kit == null)
                 return;

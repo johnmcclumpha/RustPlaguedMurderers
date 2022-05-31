@@ -124,7 +124,7 @@ namespace Oxide.Plugins
 
         #region Hooks
 
-        void OnEntitySpawned(NPCMurderer murderer)
+        void OnEntitySpawned(NPCPlayer murderer)
         {
             var combatEntity = murderer as BaseCombatEntity;
             combatEntity._maxHealth = _config.murdererHealth;
@@ -140,7 +140,7 @@ namespace Oxide.Plugins
         }
 
 
-        void OnEntitySpawned(HTNPlayer scarecrow)
+        void OnEntitySpawned(ScarecrowNPC scarecrow)
         {
             
             var combatEntity = scarecrow as BaseCombatEntity;
@@ -204,7 +204,7 @@ namespace Oxide.Plugins
           return SelectedItem;
         }
 
-        void ClotheMurderer(NPCMurderer murderer)
+        void ClotheMurderer(NPCPlayer murderer)
         {
 
             var inv_wear = murderer.inventory.containerWear;
@@ -236,7 +236,7 @@ namespace Oxide.Plugins
 
         }
 
-        void ClotheScarecrow(HTNPlayer scarecrow)
+        void ClotheScarecrow(ScarecrowNPC scarecrow)
         {
 
             var inv_wear = scarecrow.inventory.containerWear;
@@ -268,7 +268,7 @@ namespace Oxide.Plugins
 
         }
 
-        private static void GiveKitMurderer(NPCMurderer npc, string kit)
+        private static void GiveKitMurderer(NPCPlayer npc, string kit)
         {
             if (kit == null)
                 return;
@@ -285,7 +285,7 @@ namespace Oxide.Plugins
             npc.UpdateActiveItem(item.uid);
         }
 
-        private static void GiveKitScarecrow(HTNPlayer npc, string kit)
+        private static void GiveKitScarecrow(ScarecrowNPC npc, string kit)
         {
             if (kit == null)
                 return;

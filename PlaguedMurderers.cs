@@ -5,7 +5,7 @@ using Oxide.Core;
 
 namespace Oxide.Plugins
 {
-    [Info("Plagued Murderers", "DarkAz", "2.4.1")]
+    [Info("Plagued Murderers", "DarkAz and sri369", "2.4.2")]
     [Description("Allows murderers and scarecrows to be customised with health, attire, skins and melee weapons.")]
     class PlaguedMurderers : RustPlugin
     {
